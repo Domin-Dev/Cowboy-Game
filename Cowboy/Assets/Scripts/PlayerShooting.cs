@@ -5,13 +5,15 @@ using System;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public event EventHandler OnShot;
-    
+
+    [SerializeField] GameObject bullet;
 
     Transform shootingTransform;
     Transform gunTransform;
     Animator animator;
     ParticleSystem particleSystem;
+    Animator particleAnimator;
+
 
     void Start()
     {
@@ -19,25 +21,37 @@ public class PlayerShooting : MonoBehaviour
         gunTransform = shootingTransform.GetChild(0).transform;
         animator = gunTransform.GetChild(0).GetComponent<Animator>();
         particleSystem = gunTransform.GetChild(0).GetComponentInChildren<ParticleSystem>();
+        particleAnimator = gunTransform.GetChild(0).GetChild(1).GetComponent<Animator>();
     }
 
     void Update()
     {
         if(Input.GetMouseButtonDown(0))
         {
-            particleSystem.Play();
-            if (OnShot != null) OnShot(this, EventArgs.Empty);
-            animator.SetTrigger("Shot");
-            UpdateGun(true);
+            Shot();
         }
 
 
-        UpdateGun(false);
+        UpdateGun();
     }
 
     float currentVelocity1;
 
-    private void UpdateGun(bool isRecoil)
+
+    private void Shot()
+    {
+        Transform bulletTransform = Instantiate(bullet, shootingTransform.position, Quaternion.identity).transform;
+
+        Vector3 shootDir = (Functions.GetMousePosition() - shootingTransform.position).normalized;
+        bulletTransform.GetComponent<Bullet>().SetUp(shootDir);
+
+        SoundManager.Instance.PlaySound(0);
+        particleAnimator.SetTrigger("Shot");
+        particleSystem.Play();
+        animator.SetTrigger("Shot");
+        UpdateGun();
+    }
+    private void UpdateGun()
     {
         float recoil = 0;
         Vector3 mousePosition = Functions.GetMousePosition();
@@ -49,12 +63,10 @@ public class PlayerShooting : MonoBehaviour
 
         if (mousePosition.x - shootingTransform.position.x >= 0)
         {
-            if (isRecoil) recoil = 15;
             gunTransform.localRotation = new Quaternion(0, 0, gunTransform.localRotation.z, 0);
         }
         else
         {
-            if (isRecoil) recoil = -15;
             gunTransform.localRotation = new Quaternion(180, 0, gunTransform.localRotation.z, 0);
         }
     }

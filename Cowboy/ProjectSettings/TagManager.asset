@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Ground
+    uniqueID: 135497929
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Particle
+    uniqueID: 2762580397
     locked: 0

@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D rigidbody2D;
     Transform playerTransform;
 
+
     private void Start()
     {
         playerTransform = transform.GetChild(0).transform;
