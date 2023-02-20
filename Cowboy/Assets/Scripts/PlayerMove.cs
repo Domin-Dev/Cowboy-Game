@@ -61,7 +61,7 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-          rigidbody2D.MovePosition(transform.position + new Vector3(horizontal, vertical) * Time.deltaTime * speedPlayer);
+          rigidbody2D.MovePosition(transform.position + new Vector3(horizontal, vertical).normalized * Time.deltaTime * speedPlayer);
     }
 
 }

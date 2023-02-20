@@ -33,24 +33,44 @@ public class PlayerShooting : MonoBehaviour
 
 
         UpdateGun();
+
+        if(shotTimer > 0)
+        {
+            shotTimer -= Time.deltaTime;
+            if(shotTimer <= 0)
+            {
+                canShot = true;
+            }
+        }
+    }
+
+    bool canShot = true;
+    float shotTimer;
+    private void Shot()
+    {
+        if (canShot)
+        {
+            Transform bulletTransform = Instantiate(bullet, particleSystem.transform.position, Quaternion.identity).transform;
+
+            Vector3 shootDir = (Functions.GetMousePosition() - shootingTransform.position).normalized;
+            bulletTransform.GetComponent<Bullet>().SetUp(shootDir);
+
+            SoundManager.Instance.PlaySound(0);
+            particleAnimator.SetTrigger("Shot");
+            particleSystem.Play();
+            animator.SetTrigger("Shot");
+            UpdateGun();
+            SetShotTimer();
+        }
+    }
+
+    private void SetShotTimer()
+    {
+        canShot = false;
+        shotTimer = 0.5f;
     }
 
     float currentVelocity1;
-
-
-    private void Shot()
-    {
-        Transform bulletTransform = Instantiate(bullet, shootingTransform.position, Quaternion.identity).transform;
-
-        Vector3 shootDir = (Functions.GetMousePosition() - shootingTransform.position).normalized;
-        bulletTransform.GetComponent<Bullet>().SetUp(shootDir);
-
-        SoundManager.Instance.PlaySound(0);
-        particleAnimator.SetTrigger("Shot");
-        particleSystem.Play();
-        animator.SetTrigger("Shot");
-        UpdateGun();
-    }
     private void UpdateGun()
     {
         float recoil = 0;

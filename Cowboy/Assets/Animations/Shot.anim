@@ -23,9 +23,9 @@ AnimationClip:
       value: {fileID: -1603291472181913768, guid: fd284d7cf17ee2645a008d17cf9624bb, type: 3}
     - time: 0.016666668
       value: {fileID: 1727701513693895514, guid: fd284d7cf17ee2645a008d17cf9624bb, type: 3}
-    - time: 0.033333335
-      value: {fileID: 6885142304389756897, guid: fd284d7cf17ee2645a008d17cf9624bb, type: 3}
     - time: 0.05
+      value: {fileID: 6885142304389756897, guid: fd284d7cf17ee2645a008d17cf9624bb, type: 3}
+    - time: 0.06666667
       value: {fileID: -1603291472181913768, guid: fd284d7cf17ee2645a008d17cf9624bb, type: 3}
     attribute: m_LightCookieSprite
     path: 
@@ -55,7 +55,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.06666667
+    m_StopTime: 0.083333336
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
