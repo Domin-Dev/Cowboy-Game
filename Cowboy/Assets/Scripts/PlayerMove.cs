@@ -22,8 +22,11 @@ public class PlayerMove : MonoBehaviour
     float horizontal, vertical;
     private void Update()
     {
-         horizontal = Input.GetAxis("Horizontal");
-         vertical = Input.GetAxis("Vertical");
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+
+
+        Debug.Log(horizontal + vertical);
         if (horizontal != 0 || vertical != 0)
         {
             spriteRenderer.flipX = false;
@@ -61,7 +64,22 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-          rigidbody2D.MovePosition(transform.position + new Vector3(horizontal, vertical).normalized * Time.deltaTime * speedPlayer);
+        if(!isPush)
+        {
+            if (horizontal != 0 || vertical != 0) rigidbody2D.MovePosition(transform.position + new Vector3(horizontal, vertical) * Time.deltaTime * speedPlayer);
+            else rigidbody2D.MovePosition(transform.position + (new Vector3(horizontal, vertical) * Time.deltaTime * speedPlayer) / 1.4142f);
+        }
+        else
+        {
+            isPush = false;
+        }
     }
 
+    bool isPush = false;
+    public void Push(Vector3 pushDir)
+    {
+        isPush = true;
+        rigidbody2D.MovePosition(transform.position - 0.25f * pushDir);
+    }
+    
 }

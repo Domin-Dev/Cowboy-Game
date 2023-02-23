@@ -7,6 +7,11 @@ public class PlayerShooting : MonoBehaviour
 {
 
     [SerializeField] GameObject bullet;
+   
+    PlayerMove playerMove;
+
+
+
 
     Transform shootingTransform;
     Transform gunTransform;
@@ -17,6 +22,8 @@ public class PlayerShooting : MonoBehaviour
 
     void Start()
     {
+        playerMove = GetComponent<PlayerMove>();
+
         shootingTransform = transform.GetChild(1).transform;
         gunTransform = shootingTransform.GetChild(0).transform;
         animator = gunTransform.GetChild(0).GetComponent<Animator>();
@@ -30,7 +37,6 @@ public class PlayerShooting : MonoBehaviour
         {
             Shot();
         }
-
 
         UpdateGun();
 
@@ -54,6 +60,7 @@ public class PlayerShooting : MonoBehaviour
 
             Vector3 shootDir = (Functions.GetMousePosition() - shootingTransform.position).normalized;
             bulletTransform.GetComponent<Bullet>().SetUp(shootDir);
+            playerMove.Push(shootDir);
 
             SoundManager.Instance.PlaySound(0);
             particleAnimator.SetTrigger("Shot");
