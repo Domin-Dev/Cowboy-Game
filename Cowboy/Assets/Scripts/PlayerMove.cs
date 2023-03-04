@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : NetworkBehaviour
 {
     [SerializeField] float speedPlayer;
 
@@ -22,6 +23,8 @@ public class PlayerMove : MonoBehaviour
     float horizontal, vertical;
     private void Update()
     {
+        if (!IsOwner) return;
+
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
